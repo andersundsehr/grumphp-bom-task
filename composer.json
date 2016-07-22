@@ -1,6 +1,6 @@
 {
     "name": "andersundsehr/grumphp-bom-task",
-    "description": "Forces no BOM in files",
+    "description": "Force files to have no BOM",
     "type": "library",
     "license": "beerware",
     "require": {

@@ -7,15 +7,26 @@ use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\Context\GitPreCommitContext;
 use GrumPHP\Task\Context\RunContext;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
+/**
+ * Class BomFixerTask
+ *
+ * @author Matthias Vogel <m.vogel@andersundsehr.com>
+ * @package AUS\GrumphpBomTask
+ */
 class BomFixerTask extends AbstractExternalTask
 {
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'aus_bom_fixer';
     }
 
+    /**
+     * @return OptionsResolver
+     */
     public function getConfigurableOptions()
     {
         $resolver = new OptionsResolver();
@@ -30,11 +41,19 @@ class BomFixerTask extends AbstractExternalTask
         return $resolver;
     }
 
+    /**
+     * @param ContextInterface $context
+     * @return bool
+     */
     public function canRunInContext(ContextInterface $context)
     {
         return ($context instanceof GitPreCommitContext || $context instanceof RunContext);
     }
 
+    /**
+     * @param ContextInterface $context
+     * @return TaskResult
+     */
     public function run(ContextInterface $context)
     {
         $currentWorkDirectory = getcwd();
@@ -58,9 +77,9 @@ class BomFixerTask extends AbstractExternalTask
                     $fileContent = preg_replace("/^$bom/", '', $fileContent);
                     unlink($execFile);
                     file_put_contents($execFile, $fileContent);
-                    $fixedLog[] = $execFile . " had BOM and is fixed now" . PHP_EOL . $fileContent;
+                    $fixedLog[] = $execFile . " had BOM and is fixed now";
                 } else {
-                    $log[] = $execFile . " has BOM and should be fixed";
+                    $errorLog[] = $execFile . " has BOM and should be fixed";
                 }
             }
         }

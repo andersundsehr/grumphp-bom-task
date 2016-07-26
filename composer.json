@@ -7,6 +7,9 @@
         "php": ">=5.6",
         "phpro/grumphp": "0.9.*"
     },
+    "support": {
+        "issues": "https://github.com/andersundsehr/grumphp-bom-task/issues"
+    },
     "require-dev": {
         "phpro/grumphp": "0.9.*",
         "squizlabs/php_codesniffer": "2.6.*",
@@ -20,7 +23,8 @@
     "authors": [
         {
             "name": "Matthias Vogel",
-            "email": "m.vogel@andersundsehr.com"
+            "email": "m.vogel@andersundsehr.com",
+            "homepage": "http://andersundsehr.com"
         }
     ]
 }

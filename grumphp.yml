@@ -16,7 +16,7 @@ parameters:
             triggered_by: [php]
         git_commit_message:
             matchers:
-                - /(\[!!!\]|)\[(BUGFIX|FEATURE|TASK|CLEANUP|SECURITY)] .*/
+                - /(\[(!!!|WIP)]|)(\[(BUGFIX|FEATURE|TASK|CLEANUP|SECURITY)]|Merge branch '.+' into) .+/
             case_insensitive: false
             multiline: true
             additional_modifiers: ''

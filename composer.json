@@ -17,7 +17,7 @@
     },
     "autoload":{
         "psr-4":{
-            "AUS\\GrumphpBomTask\\": "src/"
+            "AUS\\GrumPHPBomTask\\": "src/"
         }
     },
     "authors": [

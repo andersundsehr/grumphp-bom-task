@@ -35,4 +35,4 @@ parameters:
             metadata:
                 priority: 100
     extensions:
-        - AUS\GrumPhpBomTask\ExtensionLoader
+        - AUS\GrumPHPBomTask\ExtensionLoader

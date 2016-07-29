@@ -1,5 +1,5 @@
 <?php
-namespace AUS\GrumphpBomTask;
+namespace AUS\GrumPHPBomTask;
 
 use GrumPHP\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

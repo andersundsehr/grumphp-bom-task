@@ -1,5 +1,5 @@
 <?php
-namespace AUS\GrumphpBomTask;
+namespace AUS\GrumPHPBomTask;
 
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Task\AbstractExternalTask;

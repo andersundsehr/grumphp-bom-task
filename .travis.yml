@@ -19,7 +19,7 @@ install:
   - phpenv rehash
 
 script:
-  - ./vendor/bin/phpcs --standard=PSR2 ./bin/fixbom ./src ./tests -n
+  - ./vendor/bin/grumphp run
 
 # Customize when the notification emails are sent.
 notifications:

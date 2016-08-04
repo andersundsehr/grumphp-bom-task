@@ -31,11 +31,9 @@ class BomFixerTask extends AbstractExternalTask
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults(array(
-            'auto_fix' => false,
             'triggered_by' => ['php', 'css', 'scss', 'less', 'json', 'sql', 'yml', 'txt'],
         ));
 
-        $resolver->addAllowedTypes('auto_fix', array('bool'));
         $resolver->addAllowedTypes('triggered_by', array('array'));
 
         return $resolver;
@@ -56,40 +54,38 @@ class BomFixerTask extends AbstractExternalTask
      */
     public function run(ContextInterface $context)
     {
-        $currentWorkDirectory = getcwd();
         $config = $this->getConfiguration();
         $files = $context->getFiles()->extensions($config['triggered_by']);
         if (0 === count($files)) {
             return TaskResult::createSkipped($this, $context);
         }
 
-        $errorLog = [];
-        $fixedLog = [];
+        if (is_file('./vendor/bin/fixbom')) {
+            $fixCommand = './vendor/bin/fixbom';
+        } elseif (is_file('./bin/fixbom')) {
+            $fixCommand = './bin/fixbom';
+        } else {
+            $fixCommand = 'fixbom';
+        }
+        $shouldGetFixedLog = [];
         /** @var \Symfony\Component\Finder\SplFileInfo $file */
         foreach ($files as $file) {
-            chdir(dirname($file->getRealPath()));
             $execFile = $file->getPathname();
             $debugLog[] = $execFile;
             if ($this->isFileWithBOM($execFile)) {
-                if ($config['auto_fix']) {
-                    $fileContent = file_get_contents($execFile);
-                    $bom = pack('H*', 'EFBBBF');
-                    $fileContent = preg_replace("/^$bom/", '', $fileContent);
-                    unlink($execFile);
-                    file_put_contents($execFile, $fileContent);
-                    $fixedLog[] = $execFile . " had BOM and is fixed now";
-                } else {
-                    $errorLog[] = $execFile . " has BOM and should be fixed";
-                }
+                $shouldGetFixedLog[] = $execFile . " has BOM and should be fixed";
+                $fixCommand .= " '" . $execFile . "'";
             }
         }
-        chdir($currentWorkDirectory);
 
-        if (count($errorLog) > 0) {
-            return TaskResult::createFailed($this, $context, implode(PHP_EOL, $errorLog));
-        }
-        if (count($fixedLog) > 0) {
-            return TaskResult::createNonBlockingFailed($this, $context, implode(PHP_EOL, $fixedLog));
+        if (count($shouldGetFixedLog) > 0) {
+            return TaskResult::createFailed(
+                $this,
+                $context,
+                implode(PHP_EOL, $shouldGetFixedLog) . PHP_EOL
+                . "you can use this to fix them:" . PHP_EOL .
+                $fixCommand
+            );
         }
         return TaskResult::createPassed($this, $context);
     }

@@ -5,7 +5,7 @@ Force files to have no BOM via GrumPHP
 parameters:
     tasks:
         aus_bom_fixer:
-            auto_fix: true
+            triggered_by:  [php, css, scss, less, json, sql, yml, txt]
     extensions:
         - AUS\GrumPHPBomTask\ExtensionLoader
 ````

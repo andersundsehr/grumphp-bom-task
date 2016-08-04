@@ -5,7 +5,6 @@ parameters:
     ignore_unstaged_changes: false #brocken
     tasks:
         composer:
-            no_check_publish: true
             with_dependencies: false
             strict: false
         git_blacklist:
@@ -31,7 +30,6 @@ parameters:
             verbose: true
         yamllint: ~
         aus_bom_fixer:
-            auto_fix: true
             metadata:
                 priority: 100
     extensions:

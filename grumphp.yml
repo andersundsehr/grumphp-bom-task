@@ -25,9 +25,6 @@ parameters:
             standard: "PSR2"
             show_warnings: false
             tab_width: 4
-        phpcsfixer:
-            level: "psr2"
-            verbose: true
         yamllint: ~
         aus_bom_fixer:
             metadata:

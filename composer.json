@@ -10,6 +10,11 @@
             "homepage": "http://andersundsehr.com"
         }
     ],
+    "config":{
+        "platform":{
+            "php": "5.6"
+        }
+    },
     "support": {
         "issues": "https://github.com/andersundsehr/grumphp-bom-task/issues"
     },
@@ -19,18 +24,11 @@
             "AUS\\GrumPHPBomTask\\": "src/"
         }
     },
-    "autoload-dev":{
-        "psr-4":{
-            "AUS\\GrumPHPBomTask\\Tests\\": "tests/"
-        }
-    },
     "require": {
         "php": ">=5.6",
-        "phpro/grumphp": "0.9.*"
+        "phpro/grumphp": ">=0.9.0 || >=0.11.1"
     },
     "require-dev": {
-        "phpro/grumphp": "0.9.*",
-        "squizlabs/php_codesniffer": "2.6.*",
-        "friendsofphp/php-cs-fixer": "1.11.*"
+        "squizlabs/php_codesniffer": "2.6.*"
     }
 }

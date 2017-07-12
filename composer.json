@@ -1,13 +1,13 @@
 {
-    "name": "andersundsehr/grumphp-bom-task",
+    "name": "pluswerk/grumphp-bom-task",
     "description": "Force files to have no BOM",
     "type": "library",
-    "license": "beerware",
+    "license": "LGPL-3.0",
     "authors": [
         {
             "name": "Matthias Vogel",
-            "email": "m.vogel@andersundsehr.com",
-            "homepage": "http://andersundsehr.com"
+            "email": "matthias.vogel@pluswerk.ag",
+            "homepage": "http://pluswerk.ag"
         }
     ],
     "config":{
@@ -16,17 +16,17 @@
         }
     },
     "support": {
-        "issues": "https://github.com/andersundsehr/grumphp-bom-task/issues"
+        "issues": "https://github.com/pluswerk/grumphp-bom-task/issues"
     },
     "bin": ["bin/fixbom"],
     "autoload":{
         "psr-4":{
-            "AUS\\GrumPHPBomTask\\": "src/"
+            "PLUS\\GrumPHPBomTask\\": "src/"
         }
     },
     "require": {
         "php": ">=5.6",
-        "phpro/grumphp": ">=0.9.0 || >=0.11.1"
+        "phpro/grumphp": "^0.11.1"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "2.6.*"

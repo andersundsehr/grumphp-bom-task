@@ -26,8 +26,8 @@ parameters:
             show_warnings: false
             tab_width: 4
         yamllint: ~
-        aus_bom_fixer:
+        plus_bom_fixer:
             metadata:
                 priority: 100
     extensions:
-        - AUS\GrumPHPBomTask\ExtensionLoader
+        - PLUS\GrumPHPBomTask\ExtensionLoader

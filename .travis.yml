@@ -16,7 +16,7 @@ env:
 
 cache:
   directories:
-    - .composer/cache
+    -  $HOME/.composer/cache
 
 matrix:
   fast_finish: true

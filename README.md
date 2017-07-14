@@ -13,8 +13,8 @@ parameters:
     extensions:
         - PLUS\GrumPHPBomTask\ExtensionLoader
 ````
-### upgrade from andersundsehr/gurmphp-bom-task
-If you come from [andersundsehr/grumphp-bom-task](https://github.com/andersundsehr/grumph-bom-task), change the extensions Loader path in the grumphp.yml file. 
+### upgrade from andersundsehr/grumphp-bom-task
+If you come from [andersundsehr/grumphp-bom-task](https://github.com/andersundsehr/grumphp-bom-task), change the extensions Loader path in the grumphp.yml file. 
 ````yml
 parameters:
     tasks:

@@ -85,7 +85,6 @@ class BomFixerTask extends AbstractExternalTask
         /** @var \Symfony\Component\Finder\SplFileInfo $file */
         foreach ($files as $file) {
             $execFile = $file->getPathname();
-            $debugLog[] = $execFile;
             if ($this->isFileWithBOM($execFile)) {
                 $shouldGetFixedLog[] = $execFile . " has BOM and should be fixed";
                 $fixCommand .= " '" . $execFile . "'";

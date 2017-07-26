@@ -2,6 +2,9 @@ language: php
 dist: trusty
 sudo: false
 
+git:
+  depth: 5
+
 php:
   - 5.6
   - 7.0
@@ -11,23 +14,23 @@ php:
 env:
   matrix:
     -
-    - DEPENDENCIES=--prefer-lowest
-    - REQUIRE=composer require phpro/grumphp:* --no-progress --profile --no-scripts --no-suggest
+    - dependencies=lowest
+    - dependencies=highest
 
 cache:
   directories:
-    - .composer/cache
+    - $HOME/.composer/cache
 
 matrix:
   fast_finish: true
 
 before_install:
-  - alias composer=composer\ --no-interaction && composer selfupdate
-  - composer global require hirak/prestissimo
+    - phpenv config-rm xdebug.ini || echo "xdebug not available"
 
 install:
-  - travis_retry composer update --no-progress --profile --no-scripts --no-suggest $DEPENDENCIES
-  - travis_retry $REQUIRE
+  - if [ -z "$dependencies" ];          then composer install                  --no-progress --no-scripts --no-suggest -n; fi;
+  - if [ "$dependencies" = "lowest" ];  then composer update                   --no-progress --no-scripts --no-suggest -n --prefer-lowest; fi;
+  - if [ "$dependencies" = "highest" ]; then composer require phpro/grumphp:*  --no-progress --no-scripts --no-suggest -n; fi;
 
 script:
    - ./vendor/bin/grumphp run

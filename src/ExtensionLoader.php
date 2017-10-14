@@ -1,5 +1,4 @@
 <?php
-
 namespace PLUS\GrumPHPBomTask;
 
 use GrumPHP\Extension\ExtensionInterface;

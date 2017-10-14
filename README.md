@@ -3,9 +3,13 @@
 [![Travis](https://img.shields.io/travis/Kanti/LJSON.svg?style=flat-square)](https://travis-ci.org/Pluswerk/grumphp-bom-task)
 [![Code Climate](https://img.shields.io/codeclimate/github/pluswerk/grumphp-bom-task.svg?style=flat-square)](https://codeclimate.com/github/pluswerk/grumphp-bom-task)
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/69cf4b58-b856-4f79-a3da-a89291eae102.svg?style=flat-square)](https://insight.sensiolabs.com/projects/69cf4b58-b856-4f79-a3da-a89291eae102)
+
 # grumphp-bom-task
+
 Force files to have no BOM via GrumPHP
+
 ### grumphp.yml:
+
 ````yml
 parameters:
     tasks:
@@ -14,8 +18,13 @@ parameters:
     extensions:
         - PLUS\GrumPHPBomTask\ExtensionLoader
 ````
-### upgrade from andersundsehr/grumphp-bom-task
+
+### Upgrade from andersundsehr/grumphp-bom-task
+
 If you come from [andersundsehr/grumphp-bom-task](https://github.com/andersundsehr/grumphp-bom-task), change the extensions Loader path in the grumphp.yml file. 
+
+from:
+
 ````yml
 parameters:
     tasks:
@@ -24,8 +33,9 @@ parameters:
     extensions:
         - AUS\GrumPHPBomTask\ExtensionLoader
 ````
-from:
+
 to:
+
 ````yml
 parameters:
     tasks:
@@ -34,5 +44,7 @@ parameters:
     extensions:
         - PLUS\GrumPHPBomTask\ExtensionLoader
 ````
-### composer:
+
+### Composer
+
 ``composer require --dev pluswerk/grumphp-bom-task``

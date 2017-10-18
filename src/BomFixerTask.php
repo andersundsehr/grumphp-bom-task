@@ -1,5 +1,4 @@
 <?php
-
 namespace PLUS\GrumPHPBomTask;
 
 use GrumPHP\Runner\TaskResult;
@@ -86,8 +85,8 @@ class BomFixerTask extends AbstractExternalTask
         foreach ($files as $file) {
             $execFile = $file->getPathname();
             if ($this->isFileWithBOM($execFile)) {
-                $shouldGetFixedLog[] = $execFile . " has BOM and should be fixed";
-                $fixCommand .= " '" . $execFile . "'";
+                $shouldGetFixedLog[] = $execFile . ' has BOM and should be fixed';
+                $fixCommand .= ' \'' . $execFile . '\'';
             }
         }
 
@@ -95,9 +94,9 @@ class BomFixerTask extends AbstractExternalTask
             return TaskResult::createFailed(
                 $this,
                 $context,
-                implode(PHP_EOL, $shouldGetFixedLog) . PHP_EOL
-                . "you can use this to fix them:" . PHP_EOL .
-                $fixCommand
+                implode(PHP_EOL, $shouldGetFixedLog) . PHP_EOL .
+                    'you can use this to fix them:' . PHP_EOL .
+                    $fixCommand
             );
         }
         return TaskResult::createPassed($this, $context);

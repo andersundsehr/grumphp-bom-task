@@ -3,6 +3,7 @@ namespace PLUS\GrumPHPBomTask;
 
 use GrumPHP\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Class ExtensionLoader
@@ -25,9 +26,9 @@ class ExtensionLoader implements ExtensionInterface
     public function load(ContainerBuilder $container)
     {
         return $container->register('task.plus_bom_fixer', BomFixerTask::class)
-            ->addArgument($container->get('config'))
-            ->addArgument($container->get('process_builder'))
-            ->addArgument($container->get('formatter.raw_process'))
+            ->addArgument(new Reference('config'))
+            ->addArgument(new Reference('process_builder'))
+            ->addArgument(new Reference('formatter.raw_process'))
             ->addTag('grumphp.task', ['config' => 'plus_bom_fixer']);
     }
 }

@@ -23,7 +23,7 @@ parameters:
             detect_key_conflicts: true
         phpcs:
             standard: "PSR2"
-            show_warnings: false
+            warning_severity: 900000
             tab_width: 4
         yamllint: ~
         plus_bom_fixer:

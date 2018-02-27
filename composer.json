@@ -10,8 +10,8 @@
             "homepage": "http://pluswerk.ag"
         }
     ],
-    "config":{
-        "platform":{
+    "config": {
+        "platform": {
             "php": "5.6"
         }
     },
@@ -26,9 +26,9 @@
     },
     "require": {
         "php": ">=5.6",
-        "phpro/grumphp": "^0.13.0"
+        "phpro/grumphp": "0.14.*"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "2.6.*"
+        "squizlabs/php_codesniffer": "2.* | 3.*"
     }
 }

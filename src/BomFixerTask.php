@@ -94,9 +94,9 @@ class BomFixerTask extends AbstractExternalTask
             return TaskResult::createFailed(
                 $this,
                 $context,
-                implode(PHP_EOL, $shouldGetFixedLog) . PHP_EOL .
-                    'you can use this to fix them:' . PHP_EOL .
-                    $fixCommand
+                implode(PHP_EOL, $shouldGetFixedLog) . PHP_EOL
+                . 'you can use this to fix them:' . PHP_EOL
+                . $fixCommand
             );
         }
         return TaskResult::createPassed($this, $context);

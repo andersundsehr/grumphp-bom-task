@@ -14,15 +14,13 @@ parameters:
                 - "exit;"
             triggered_by: [php]
         git_commit_message:
-            matchers:
-                - /(\[(!!!|WIP)]|)(\[(BUGFIX|FEATURE|TASK|CLEANUP|SECURITY)]|Merge branch '.+' into) .+/
-            case_insensitive: false
-            multiline: true
-            additional_modifiers: ''
+            max_subject_width: 120
+            max_body_width: 120
+            enforce_capitalized_subject: false
         jsonlint:
             detect_key_conflicts: true
         phpcs:
-            standard: "PSR2"
+            standard: "PSR12"
             warning_severity: 900000
             tab_width: 4
         yamllint: ~

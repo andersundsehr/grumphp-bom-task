@@ -1,35 +1,23 @@
 <?php
+
 namespace PLUS\GrumPHPBomTask;
 
 use GrumPHP\Runner\TaskResult;
+use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\AbstractExternalTask;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\Context\GitPreCommitContext;
 use GrumPHP\Task\Context\RunContext;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class BomFixerTask
- *
- * @author Matthias Vogel <matthias.vogel@pluswerk.ag>
- * @package PLUS\GrumphpBomTask
- */
 class BomFixerTask extends AbstractExternalTask
 {
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'plus_bom_fixer';
     }
 
-    /**
-     * @return \Symfony\Component\OptionsResolver\OptionsResolver
-     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
-     * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
-     */
-    public function getConfigurableOptions()
+    public function getConfigurableOptions(): OptionsResolver
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults(
@@ -43,29 +31,12 @@ class BomFixerTask extends AbstractExternalTask
         return $resolver;
     }
 
-    /**
-     * @param ContextInterface $context
-     *
-     * @return bool
-     */
-    public function canRunInContext(ContextInterface $context)
+    public function canRunInContext(ContextInterface $context): bool
     {
         return ($context instanceof GitPreCommitContext || $context instanceof RunContext);
     }
 
-    /**
-     * @param ContextInterface $context
-     *
-     * @return \GrumPHP\Runner\TaskResult
-     * @throws \GrumPHP\Exception\RuntimeException
-     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
-     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
-     * @throws \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
-     * @throws \Symfony\Component\OptionsResolver\Exception\NoSuchOptionException
-     * @throws \Symfony\Component\OptionsResolver\Exception\OptionDefinitionException
-     * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
-     */
-    public function run(ContextInterface $context)
+    public function run(ContextInterface $context): TaskResultInterface
     {
         $config = $this->getConfiguration();
         $files = $context->getFiles()->extensions($config['triggered_by']);
@@ -75,10 +46,12 @@ class BomFixerTask extends AbstractExternalTask
 
         if (is_file('./vendor/bin/fixbom')) {
             $fixCommand = './vendor/bin/fixbom';
-        } else if (is_file('./bin/fixbom')) {
-            $fixCommand = './bin/fixbom';
         } else {
-            $fixCommand = 'fixbom';
+            if (is_file('./bin/fixbom')) {
+                $fixCommand = './bin/fixbom';
+            } else {
+                $fixCommand = 'fixbom';
+            }
         }
         $shouldGetFixedLog = [];
         /** @var \Symfony\Component\Finder\SplFileInfo $file */
@@ -102,14 +75,7 @@ class BomFixerTask extends AbstractExternalTask
         return TaskResult::createPassed($this, $context);
     }
 
-
-    /**
-     * @param string $filename
-     * @param string $search
-     *
-     * @return bool
-     */
-    protected function fileInfoSearch($filename, $search)
+    protected function fileInfoSearch(string $filename, string $search): bool
     {
         $output = [];
         exec('file ' . '"' . $filename . '"', $output, $returnVar);
@@ -119,12 +85,7 @@ class BomFixerTask extends AbstractExternalTask
         return false;
     }
 
-    /**
-     * @param string $filename
-     *
-     * @return bool
-     */
-    public function isFileWithBOM($filename)
+    public function isFileWithBOM(string $filename): bool
     {
         return $this->fileInfoSearch($filename, 'BOM');
     }

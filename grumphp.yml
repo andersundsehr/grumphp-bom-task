@@ -1,8 +1,4 @@
-parameters:
-    git_dir: .
-    bin_dir: vendor/bin
-    stop_on_failure: false
-    ignore_unstaged_changes: false #brocken
+grumphp:
     tasks:
         composer:
             with_dependencies: false
@@ -21,7 +17,7 @@ parameters:
             detect_key_conflicts: true
         phpcs:
             standard: "PSR12"
-            warning_severity: 900000
+            warning_severity: 0
             tab_width: 4
         yamllint: ~
         plus_bom_fixer:

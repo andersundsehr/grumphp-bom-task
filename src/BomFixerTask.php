@@ -4,20 +4,25 @@ namespace PLUS\GrumPHPBomTask;
 
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Runner\TaskResultInterface;
-use GrumPHP\Task\AbstractExternalTask;
+use GrumPHP\Task\Config\EmptyTaskConfig;
+use GrumPHP\Task\Config\TaskConfigInterface;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\Context\GitPreCommitContext;
 use GrumPHP\Task\Context\RunContext;
+use GrumPHP\Task\TaskInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BomFixerTask extends AbstractExternalTask
+final class BomFixerTask implements TaskInterface
 {
-    public function getName(): string
+    /** @var TaskConfigInterface */
+    private $config;
+
+    public function __construct()
     {
-        return 'plus_bom_fixer';
+        $this->config = new EmptyTaskConfig();
     }
 
-    public function getConfigurableOptions(): OptionsResolver
+    public static function getConfigurableOptions(): OptionsResolver
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults(
@@ -31,15 +36,27 @@ class BomFixerTask extends AbstractExternalTask
         return $resolver;
     }
 
+    public function getConfig(): TaskConfigInterface
+    {
+        return $this->config;
+    }
+
+    public function withConfig(TaskConfigInterface $config): TaskInterface
+    {
+        $new = clone $this;
+        $new->config = $config;
+
+        return $new;
+    }
+
     public function canRunInContext(ContextInterface $context): bool
     {
-        return ($context instanceof GitPreCommitContext || $context instanceof RunContext);
+        return $context instanceof RunContext || $context instanceof GitPreCommitContext;
     }
 
     public function run(ContextInterface $context): TaskResultInterface
     {
-        $config = $this->getConfiguration();
-        $files = $context->getFiles()->extensions($config['triggered_by']);
+        $files = $context->getFiles()->extensions($this->config->getOptions()['triggered_by']);
         if (0 === count($files)) {
             return TaskResult::createSkipped($this, $context);
         }
@@ -64,18 +81,20 @@ class BomFixerTask extends AbstractExternalTask
         }
 
         if (count($shouldGetFixedLog) > 0) {
-            return TaskResult::createFailed(
-                $this,
-                $context,
-                implode(PHP_EOL, $shouldGetFixedLog) . PHP_EOL
+            $errorMessage = implode(PHP_EOL, $shouldGetFixedLog) . PHP_EOL
                 . 'you can use this to fix them:' . PHP_EOL
-                . $fixCommand
-            );
+                . $fixCommand;
+            return TaskResult::createFailed($this, $context, $errorMessage);
         }
         return TaskResult::createPassed($this, $context);
     }
 
-    protected function fileInfoSearch(string $filename, string $search): bool
+    private function isFileWithBOM(string $filename): bool
+    {
+        return $this->fileInfoSearch($filename, 'BOM');
+    }
+
+    private function fileInfoSearch(string $filename, string $search): bool
     {
         $output = [];
         exec('file ' . '"' . $filename . '"', $output, $returnVar);
@@ -83,10 +102,5 @@ class BomFixerTask extends AbstractExternalTask
             return true;
         }
         return false;
-    }
-
-    public function isFileWithBOM(string $filename): bool
-    {
-        return $this->fileInfoSearch($filename, 'BOM');
     }
 }

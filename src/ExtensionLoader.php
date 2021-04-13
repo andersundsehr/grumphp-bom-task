@@ -8,9 +8,9 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ExtensionLoader implements ExtensionInterface
 {
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
-        return $container->register('task.plus_bom_fixer', BomFixerTask::class)
+        $container->register('task.plus_bom_fixer', BomFixerTask::class)
             ->addArgument(new Reference('process_builder'))
             ->addArgument(new Reference('formatter.raw_process'))
             ->addTag('grumphp.task', ['task' => 'plus_bom_fixer']);

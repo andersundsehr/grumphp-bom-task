@@ -13,5 +13,5 @@ jobs:
       image: kanti/buildy:${{ matrix.php }}
     steps:
       - uses: actions/checkout@v2
-      - run: composer install --no-progress --no-scripts -n
+      - run: COMPOSER_ROOT_VERSION=dev-main composer install --no-progress --no-scripts -n
       - run: ./vendor/bin/grumphp run

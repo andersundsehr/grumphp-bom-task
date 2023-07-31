@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace PLUS\GrumPHPBomTask;
 
+use Iterator;
 use GrumPHP\Extension\ExtensionInterface;
 
-class ExtensionLoader implements ExtensionInterface
+final class ExtensionLoader implements ExtensionInterface
 {
-    public function imports(): iterable
+    public function imports(): Iterator
     {
         yield __DIR__ . '/../Services.yaml';
     }

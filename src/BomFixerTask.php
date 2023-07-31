@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PLUS\GrumPHPBomTask;
 
+use Symfony\Component\Finder\SplFileInfo;
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\Config\ConfigOptionsResolver;
@@ -15,8 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class BomFixerTask implements TaskInterface
 {
-    /** @var TaskConfigInterface */
-    private $config;
+    private EmptyTaskConfig|TaskConfigInterface $config;
 
     public function __construct()
     {
@@ -63,20 +65,19 @@ final class BomFixerTask implements TaskInterface
 
         if (is_file('./vendor/bin/fixbom')) {
             $fixCommand = './vendor/bin/fixbom';
+        } elseif (is_file('./bin/fixbom')) {
+            $fixCommand = './bin/fixbom';
         } else {
-            if (is_file('./bin/fixbom')) {
-                $fixCommand = './bin/fixbom';
-            } else {
-                $fixCommand = 'fixbom';
-            }
+            $fixCommand = 'fixbom';
         }
+
         $shouldGetFixedLog = [];
-        /** @var \Symfony\Component\Finder\SplFileInfo $file */
+        /** @var SplFileInfo $file */
         foreach ($files as $file) {
             $execFile = $file->getPathname();
             if ($this->isFileWithBOM($execFile)) {
                 $shouldGetFixedLog[] = $execFile . ' has BOM and should be fixed';
-                $fixCommand .= ' \'' . $execFile . '\'';
+                $fixCommand .= " '" . $execFile . "'";
             }
         }
 
@@ -86,6 +87,7 @@ final class BomFixerTask implements TaskInterface
                 . $fixCommand;
             return TaskResult::createFailed($this, $context, $errorMessage);
         }
+
         return TaskResult::createPassed($this, $context);
     }
 
@@ -98,9 +100,14 @@ final class BomFixerTask implements TaskInterface
     {
         $output = [];
         exec('file ' . '"' . $filename . '"', $output, $returnVar);
-        if ($returnVar === 0 && !empty($output[0]) && strpos($output[0], $search) !== false) {
-            return true;
+        if ($returnVar !== 0) {
+            return false;
         }
-        return false;
+
+        if (empty($output[0])) {
+            return false;
+        }
+
+        return str_contains($output[0], $search);
     }
 }

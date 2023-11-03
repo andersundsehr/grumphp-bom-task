@@ -14,7 +14,7 @@
     "issues": "https://github.com/pluswerk/grumphp-bom-task/issues"
   },
   "require": {
-    "php": "~8.1.0 || ~8.2.0",
+    "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
     "phpro/grumphp": "^2.0.0"
   },
   "require-dev": {
@@ -30,9 +30,9 @@
   ],
   "config": {
     "allow-plugins": {
+      "ergebnis/composer-normalize": true,
       "phpro/grumphp": true,
       "phpstan/extension-installer": true,
-      "ergebnis/composer-normalize": true,
       "pluswerk/grumphp-config": true
     }
   },

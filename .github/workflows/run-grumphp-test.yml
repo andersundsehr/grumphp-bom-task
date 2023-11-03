@@ -12,5 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: git config --global --add safe.directory /__w/grumphp-bom-task/grumphp-bom-task
-      - run: COMPOSER_ROOT_VERSION=dev-main composer install --no-progress --no-scripts -n --ignore-platform-req=php+
+      - run: COMPOSER_ROOT_VERSION=dev-main composer install --no-progress --no-scripts -n
       - run: ./vendor/bin/grumphp run

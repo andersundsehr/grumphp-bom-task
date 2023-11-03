@@ -99,7 +99,7 @@ final class BomFixerTask implements TaskInterface
     private function fileInfoSearch(string $filename, string $search): bool
     {
         $output = [];
-        exec('file ' . '"' . $filename . '"', $output, $returnVar);
+        exec('file "' . $filename . '"', $output, $returnVar);
         if ($returnVar !== 0) {
             return false;
         }

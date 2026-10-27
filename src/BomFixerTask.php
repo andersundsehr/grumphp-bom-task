@@ -6,6 +6,7 @@ namespace PLUS\GrumPHPBomTask;
 
 use Symfony\Component\Finder\SplFileInfo;
 use GrumPHP\Runner\TaskResult;
+use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\Config\ConfigOptionsResolver;
 use GrumPHP\Task\Config\EmptyTaskConfig;
 use GrumPHP\Task\Config\TaskConfigInterface;
